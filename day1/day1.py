@@ -1,43 +1,33 @@
-def rotate(start, instructions, dial_max=99, viz=True):
+def rotate(start, instructions, dial_max=99):
     direction = instructions[0]
     distance = int(instructions[1:])
     if direction == 'R':
-        stop = (start + distance) % (dial_max + 1)
-    else:
-        stop = (start - distance) % (dial_max + 1)
-    # if raw < 0:
-    #     stop = dial_max + raw
-    # else:
-    #     stop = raw % (dial_max +)
-    # stop = (start + raw) % (dial_max + 1)
-    if viz:
-        print("Instructions:", instructions)
-        # print(raw)
-        print(start, "->", stop)
-    return stop
+        return (start + distance) % (dial_max + 1)
+    return (start - distance) % (dial_max + 1)
 
 def count_zero(i):
-    return 1 if not i else 0
+    return 1 if i == 0 else 0
 
 with open ('day1/key.txt') as file:
     content = file.read()
-    sequence = content.split("\n")[:10]
+    sequence = content.split("\n")
 
 start = 50
-stop = rotate(start, sequence[0])
+rotation = sequence[0]
+stop = rotate(start, rotation)
 zeros = count_zero(stop)
+print("\nInstructions:", rotation)
+print("Start:", start)
+print("Stop:", stop)
+print("Zeros so far:", zeros, "\n")
+
 
 for rotation in sequence[1:]:
+    print("Instructions:", rotation)
+    print("Start:", stop)
     stop = rotate(stop, rotation)
-    zeros =+ count_zero(stop)
-    print(zeros)
-    print("")
-
-# for i in range(10, 0, -1):
-#     sequence = "L" + str(i)
-#     start = 0
-#     rotate(start, sequence)
-
+    print("Stop:", stop)
+    zeros += count_zero(stop)
+    print("Zeros so far:", zeros, "\n")
 
 print(zeros)
-# print(sequence) 
